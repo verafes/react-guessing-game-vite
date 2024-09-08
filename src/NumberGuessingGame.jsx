@@ -19,18 +19,22 @@ const NumberGuessingGame = () => {
   const [latestGuess, setLatestGuess] = useState(null);
 
   const handleGuess = (guess) => {
-    setLatestGuess(Number(guess));
-    setNumberOfGuesses(numberOfGuesses + 1);
+    // Process guesses only if attempts are below the limit
+    if (numberOfGuesses < MAX_ATTEMPTS) {
+      setLatestGuess(Number(guess));
+      setNumberOfGuesses(numberOfGuesses + 1);
+    }
   }
-
+  // Function to reset the game state
   const handleReset = () => {
     setNumberToGuess(getRandomNumber());
     setNumberOfGuesses(0);
     setLatestGuess(null);
   }
   console.log(numberToGuess)
+  // Determine if the latest guess is correct
   const isCorrectGuess = latestGuess === numberToGuess;
-
+  // Determine if the game is over
   const isGameOver = isCorrectGuess || numberOfGuesses === MAX_ATTEMPTS;
 
     return (
@@ -39,7 +43,9 @@ const NumberGuessingGame = () => {
         <h2>
           Can you guess the number I am thinking of in {MAX_ATTEMPTS} tries?
         </h2>
+        {!isGameOver && (
         <GuessControl onGuess={handleGuess} />
+        )}
         {isGameOver && (
           <GameOver hasWon={isCorrectGuess} onReset={handleReset} />
         )}

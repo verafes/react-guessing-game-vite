@@ -5,7 +5,6 @@ function GuessControl({ onGuess }) {
   const [currentGuess, setCurrentGuess] = useState("");
 
   const handleInputChange = (event) => {
-    event.preventDefault();
     setCurrentGuess(event.target.value);
   }
 
